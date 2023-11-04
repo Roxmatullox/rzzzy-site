@@ -39,6 +39,10 @@
     }
   }
 
+  label{
+    color: white !important;
+  }
+
   .login-page{
     height: 100vh;
     display: flex;
@@ -48,6 +52,21 @@
 
     h1{
       color: white;
+    }
+
+    button{
+      width: 100%;
+      background-color:#ff4d4f !important;
+    }
+
+    input{
+      background-color: transparent !important;
+      color: white !important;
+    }
+
+    span{
+      background-color: transparent;
+      color: white !important;
     }
   }
 
@@ -61,5 +80,24 @@
     h1{
       color: white;
     }
+
+    button{
+      width: 100%;
+      background-color:#ff4d4f !important;
+    }
+
+    input{
+      background-color: transparent !important;
+      color: white !important;
+    }
+
+    span{
+      background-color: transparent;
+      color: white !important;
+    }
   }
+}
+
+.ant-message-notaice-content{
+  background-color: blue;
 }
