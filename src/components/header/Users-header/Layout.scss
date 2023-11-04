@@ -1,0 +1,42 @@
+#users-header{
+  position: fixed;
+  left: 0;
+  right: 0;
+  padding: 20px 0;
+  z-index: 999;
+
+  *{
+    color: white ;
+  }
+
+  .user-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2{
+      margin: 0;
+      font-size: 30px;
+      height: 35px;
+      transition: 0.3s;
+
+      &:hover{
+        color:orange;
+        font-size: 32px;
+      }
+    }
+
+    .user-header-links{
+      display: flex;
+      gap: 20px;
+    }
+    a{
+      transition: 0.3s;
+    }
+    a:hover{
+      color:orange;
+      font-size: 17px;
+      height: 20px;
+    }
+  }
+}

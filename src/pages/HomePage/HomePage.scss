@@ -1,60 +1,65 @@
+#home{
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://media.giphy.com/media/5k9BASk41i2NazAfIK/giphy.gif');
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
 
-.home{
-  min-height: calc(100vh - 116px);
-  padding-top: 100px;
-  background-color:cadetblue;
+  .home{
+    z-index: 1;
+    background-color: black;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    opacity: 0.7;
+  }
 }
 
-.home-section{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  @media(max-width:1250px){
-    &{
-      grid-template-columns: 1fr;
-      row-gap: 40px;
-    }
-  }
-
-  img{
-    width: 100%;
-    border-radius: 20px;
-    margin-bottom: 40px;
-  }
-
-  .home-text{
-    padding: 20px;
+.three-pages{
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9;
+  .home-page{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     h1{
-      color: antiquewhite;
-      font-size: 50px;
-      text-align: center;
-    }
-
-    p{
-      color:darkslategrey;
-      font-size: 18px;
-      text-align: center;
-      line-height: 25px;
+      color: white;
+      opacity: 1 !important;
     }
   }
-}
 
+  .login-page{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-header .active{
-  padding: 10px;
-  border: 1px solid white;
-  border-radius: 10px;
-}
+    h1{
+      color: white;
+    }
+  }
 
-.messages{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  .register-page{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  >div{
-    background-color: aliceblue;
-    padding: 20px;
-    border-radius: 10px;
+    h1{
+      color: white;
+    }
   }
 }
