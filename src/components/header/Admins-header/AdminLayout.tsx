@@ -42,9 +42,9 @@ const AdminsLayout = () => {
               label: <NavLink to="/admin-skills">Skills</NavLink>,
             },
             {
-              key: '3',
+              key: '/admin-education',
               icon: <UploadOutlined />,
-              label: 'nav 3',
+              label: <NavLink to="/admin-education">Educations</NavLink>,
             },
           ]}
         />

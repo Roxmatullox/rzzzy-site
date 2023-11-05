@@ -1,14 +1,13 @@
-import { Fragment , useEffect } from "react"
+import {Fragment , useEffect} from 'react'
+import useEducation from '../../zustand/education'
+import {Form , Button, Flex, Input, Modal, Space, Table } from 'antd'
+import { useForm } from 'antd/es/form/Form'
 
-import { Button, Flex, Form, Input, Modal, Space, Table } from "antd"
-import { useForm } from "antd/es/form/Form";
+import "./EducationPageAdmin.scss"
 
-import "./SkillsPage.scss"
-import useSkills from "../../zustand/skills";
-
-const SkillsPageAdmin = () => {
-
-  const { total , loading , isModalOpen , active , totalPaginate , skills , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useSkills()
+const EducationPageAdmin = () => {
+  
+  const { total , loading , isModalOpen , active , totalPaginate , skills , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useEducation()
  
   const [form] = useForm()
 
@@ -23,9 +22,9 @@ const SkillsPageAdmin = () => {
       key: 'name',
     },
     {
-      title: 'Percent',
-      dataIndex: 'percent',
-      key: 'percent',
+      title: 'Level',
+      dataIndex: 'level',
+      key: 'level',
     },
     {
       title: 'Action',
@@ -48,13 +47,13 @@ const SkillsPageAdmin = () => {
         <div className="container">
           <div className="search-container">
             <input onChange={(e)=>SerachSkills(e)} type="text" placeholder="Search..." />
-            <button className="modal-open" onClick={()=>showModal(form)}>Create skill</button>
+            <button className="modal-open" onClick={()=>showModal(form)}>Create education</button>
           </div>
         </div>
       </section>            
       <Table loading={loading} className="table"  title={()=>(
         <Flex justify="space-between" align="center">
-          <h2>Skills ({total})</h2>
+          <h2>Educations ({total})</h2>
         </Flex>
       )} pagination={false} dataSource={skills} columns={columns} />
       {
@@ -110,8 +109,8 @@ const SkillsPageAdmin = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Percent"
-                      name="percent"
+                      label="Level"
+                      name="level"
                       rules={[
                         {
                           required: true,
@@ -120,6 +119,45 @@ const SkillsPageAdmin = () => {
                       ]}
                     >
                       <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Description"
+                      name="description"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Start date"
+                      name="startDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='startDate' />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="End date"
+                      name="endDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='endDate' />
                     </Form.Item>
 
                     <Form.Item
@@ -140,4 +178,4 @@ const SkillsPageAdmin = () => {
   )
 }
 
-export default SkillsPageAdmin
+export default EducationPageAdmin

@@ -6,6 +6,7 @@ import AdminDashboardPage from "./pages/AdminDashboardPage/AdminDashboardPage"
 import ClientDashboardPage from "./pages/ClientDashboardPage/ClientDashboardPage"
 import SkillsPageAdmin from "./pages/SkillsPage/SkillsPageAdmin"
 import AdminsLayout from "./components/header/Admins-header/AdminLayout"
+import EducationPageAdmin from "./pages/EducatinPage/EducationPage"
 
 function App() {
 
@@ -19,7 +20,8 @@ function App() {
           <Route element={<AdminsLayout />}>
             <Route path="/" element={<Navigate to="/admin-dashboard" />} /> 
             <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
-            <Route path="admin-skills" element={<SkillsPageAdmin/>} />
+            <Route path="/admin-skills" element={<SkillsPageAdmin/>} />
+            <Route path="/admin-education" element={<EducationPageAdmin/>} />
           </Route>
           : <></>
         }

@@ -103,6 +103,6 @@ interface Skill {
 //   }
 // }))
 
-const useData = getData<Skill>("skills")
+const useSkills = getData<Skill>("skills")
 
-export default useData
+export default useSkills

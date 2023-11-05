@@ -2,14 +2,6 @@ import { create } from "zustand";
 import request from "../server";
 import { FormInstance, message } from "antd";
 
-interface Skill {
-    _id: string;
-    name: string;
-    percent: number;
-    user: null;
-    __v: number;
-}
-
 function getData<T>(url : string){
   interface DataInterface {
     skills : T[],
@@ -74,7 +66,10 @@ function getData<T>(url : string){
     },
     editData : async (id , form)=>{
       const {data} = await request.get(`${url}/${id}`)
-      form.setFieldsValue(data)
+      const values = {...data , endDate:data.endDate.split("T")[0] , startDate:data.startDate.split("T")[0]}
+      console.log(values);
+      
+      form.setFieldsValue(values)
       set((state)=>({...state , selected : id , isModalOpen : true}))
     },
     deleteData : async (id)=>{
@@ -103,5 +98,3 @@ function getData<T>(url : string){
 }
 
 export default getData
-
-getData<Skill>("skills")
