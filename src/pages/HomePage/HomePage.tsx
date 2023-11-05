@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 import { message , Spin , Form , Button , Input } from "antd";
 
 import "./HomePage.scss"
-import useAuth from "../../zustand/data";
+import useAuth from "../../zustand/auth";
 
 const HomePage = () => {
 
@@ -85,7 +85,7 @@ const HomePage = () => {
 
                     <Form.Item wrapperCol={{span: 24}}>
                       <Button type="primary" htmlType="submit">
-                        Submit
+                        Login
                       </Button>
                     </Form.Item>
                   </Form>
@@ -146,7 +146,7 @@ const HomePage = () => {
 
                     <Form.Item wrapperCol={{span: 24}}>
                       <Button type="primary" htmlType="submit">
-                        Submit
+                        Register
                       </Button>
                     </Form.Item>
                   </Form>
