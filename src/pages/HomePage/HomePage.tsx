@@ -5,6 +5,7 @@ import { message , Spin , Form , Button , Input } from "antd";
 
 import "./HomePage.scss"
 import useAuth from "../../zustand/auth";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
 
@@ -50,7 +51,13 @@ const HomePage = () => {
           <div className="container">
               {
                 page === "/" ? <div className="home-page" >
-                  <h1>Home</h1>
+                  <h1>
+                    Welcome to Rzzzy! Register or Login to use the site!
+                  </h1>
+                  <div className="reg-log">
+                    <NavLink to="login">Login</NavLink>
+                    <NavLink to="register">Register</NavLink>
+                  </div>
                 </div> : <></>
               }
               {
