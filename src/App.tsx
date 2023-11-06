@@ -7,6 +7,7 @@ import ClientDashboardPage from "./pages/ClientDashboardPage/ClientDashboardPage
 import SkillsPageAdmin from "./pages/SkillsPage/SkillsPageAdmin"
 import AdminsLayout from "./components/header/Admins-header/AdminLayout"
 import EducationPageAdmin from "./pages/EducatinPage/EducationPage"
+import AccountPage from "./pages/AccountPage/AccountPage"
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
             <Route path="/admin-skills" element={<SkillsPageAdmin/>} />
             <Route path="/admin-education" element={<EducationPageAdmin/>} />
+            <Route path="/my-account" element={<AccountPage />} />
           </Route>
           : <></>
         }

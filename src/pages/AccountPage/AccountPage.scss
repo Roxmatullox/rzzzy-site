@@ -1,0 +1,53 @@
+.account-page{
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px ;
+
+  @media(max-width:1000px){
+    &{
+      grid-template-columns: 1fr;
+    }
+  }
+
+  *{
+    color: white !important;
+  }
+
+  input{
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black !important;
+  }
+  button{
+    background-color: #ff4d4f;
+    color: aliceblue;
+    margin-top: 20px;
+  }
+
+  img{
+    border-radius: 9px;
+  }
+
+  .css-dev-only-do-not-override-2i2tap .ant-form-item {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.account-title{
+  color: white !important;
+  text-align: center;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64px; /* 133.333% */
+  letter-spacing: -2px;
+}
+
+.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select{
+  width: 100% !important;
+  height: 400px !important;
+}
