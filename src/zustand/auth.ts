@@ -9,6 +9,7 @@ interface AuthInterface {
   role : string | null,
   login :(form : FormInstance)=>void,
   register :(form : FormInstance)=>void,
+  logout : ()=>void
 }
 
 const useAuth = create<AuthInterface>()((set , get) => ({
@@ -50,6 +51,16 @@ const useAuth = create<AuthInterface>()((set , get) => ({
     } catch (err) {
       message.error("Hatolik ! Qayta urining !")
     }
+  },
+  logout : ()=>{
+      const logoutConfirm = confirm("Akkountdan chiqasizmi ?")
+      if (logoutConfirm) {
+        Cookies.remove("isLogin")
+        Cookies.remove("userData")
+        window.location.replace("/")
+      } else{
+        window.location.replace("/")
+      }
   }
 }))
 

@@ -13,6 +13,7 @@ import "./AdminLayout.css"
 import { NavLink } from 'react-router-dom';
 import useAccount from '../../../zustand/account';
 import { useForm } from 'antd/es/form/Form';
+import useAuth from '../../../zustand/auth';
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,7 +25,10 @@ const AdminsLayout = () => {
 
   const location = useLocation()
 
+  
   const {photo , getUserDatas} = useAccount()
+
+  const {logout} = useAuth()
 
   const [form] = useForm()
 
@@ -70,6 +74,20 @@ const AdminsLayout = () => {
               key: '/admin-experiences',
               icon: <UploadOutlined />,
               label: <NavLink to="/admin-experiences">Experiences</NavLink>,
+            },
+            {
+              key: '',
+              style:{
+                marginTop:"150%",
+                backgroundColor:"red"
+              },
+              icon: <UploadOutlined />,
+              label: <button onClick={logout} style={{
+                backgroundColor:"red",
+                textAlign:"start",
+                border:"none",
+                width:"100%"
+              }}>Logout</button>,
             },
           ]}
         />
