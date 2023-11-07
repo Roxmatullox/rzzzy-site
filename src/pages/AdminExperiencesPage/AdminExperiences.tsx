@@ -1,15 +1,13 @@
-import { Fragment , useEffect } from "react"
+import { Fragment , useEffect } from "react";
 
-import { Button, Flex, Form, Input, Modal, Space, Table } from "antd"
+import { Flex, Modal, Table , Form, Input, Button, Space } from "antd";
+import useExperiences from "../../zustand/experiences";
 import { useForm } from "antd/es/form/Form";
 
-import "./SkillsPage.scss"
-import useSkills from "../../zustand/skills";
+const AdminExperiences = () => {
 
-const SkillsPageAdmin = () => {
+  const {total , loading , isModalOpen , active , totalPaginate , data , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useExperiences()
 
-  const { total , loading , isModalOpen , active , totalPaginate , data , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useSkills()
- 
   const [form] = useForm()
 
   useEffect(()=>{
@@ -18,14 +16,14 @@ const SkillsPageAdmin = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Work name',
+      dataIndex: 'workName',
+      key: 'workName',
     },
     {
-      title: 'Percent',
-      dataIndex: 'percent',
-      key: 'percent',
+      title: 'Company name',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
       title: 'Action',
@@ -48,13 +46,13 @@ const SkillsPageAdmin = () => {
         <div className="container">
           <div className="search-container">
             <input onChange={(e)=>SerachSkills(e)} type="text" placeholder="Search..." />
-            <button className="modal-open" onClick={()=>showModal(form)}>Create skill</button>
+            <button className="modal-open" onClick={()=>showModal(form)}>Create experience</button>
           </div>
         </div>
       </section>            
       <Table loading={loading} className="table"  title={()=>(
         <Flex justify="space-between" align="center">
-          <h2>Skills ({total})</h2>
+          <h2>Experience ({total})</h2>
         </Flex>
       )} pagination={false} dataSource={data} columns={columns} />
       {
@@ -97,8 +95,8 @@ const SkillsPageAdmin = () => {
                     form={form}
                   >
                     <Form.Item
-                      label="Name"
-                      name="name"
+                      label="Work name"
+                      name="workName"
                       rules={[
                         {
                           required: true,
@@ -110,8 +108,8 @@ const SkillsPageAdmin = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Percent"
-                      name="percent"
+                      label="Compnay name"
+                      name="companyName"
                       rules={[
                         {
                           required: true,
@@ -120,6 +118,45 @@ const SkillsPageAdmin = () => {
                       ]}
                     >
                       <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Description"
+                      name="description"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Start date"
+                      name="startDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='startDate' />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="End date"
+                      name="endDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='endDate' />
                     </Form.Item>
 
                     <Form.Item
@@ -140,4 +177,4 @@ const SkillsPageAdmin = () => {
   )
 }
 
-export default SkillsPageAdmin
+export default AdminExperiences

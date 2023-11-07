@@ -2,14 +2,11 @@ import { create } from "zustand";
 import request from "../server";
 import { FormInstance, message } from "antd";
 
-
 function getData<T>(url : string){
   interface DataInterface {
     data : T[],
     total : number ,
     photo : string | null ,
-    portPhoto : string | null ,
-    portPhotoType : string | null ,
     selected : string | null ,
     search : string ,
     loading : boolean,
@@ -25,14 +22,11 @@ function getData<T>(url : string){
     handleCancel : ()=>void,
     SerachSkills : (e : React.ChangeEvent<HTMLInputElement>)=>void,
     handlePhoto : ( file : FormData | undefined )=>void,
-    handlePortfoliosPhoto : ( file : FormData | undefined )=>void
   }
   return create<DataInterface>()((set , get) => ({
     data : [],
     total : 0 ,
     photo : null ,
-    portPhoto : null ,
-    portPhotoType : null ,
     selected : null ,
     search : "" ,
     loading : false,
@@ -59,10 +53,7 @@ function getData<T>(url : string){
     handleOk : async (form)=>{
       const {selected , getData} = get()
       const oldValues = await form.validateFields()
-      let values = get().photo ? {...oldValues , photo : get().photo} : {...oldValues}
-      values = get().portPhoto ? {...values , photo : get().portPhoto} : {...values}
-      console.log(values);
-      
+      const values = get().photo ? {...oldValues , photo : get().photo} : {...oldValues}
       try {
         if (selected === null) {
           await request.post(url , values)
@@ -80,13 +71,7 @@ function getData<T>(url : string){
     editData : async (id , form)=>{
       const {data} = await request.get(`${url}/${id}`)
       const values = data.endDate ? {...data , endDate:data.endDate.split("T")[0] , startDate:data.startDate.split("T")[0]} : {...data}
-      // console.log(`${values.photo._id}.${values.photo.name}`);
-      const orgPhoto = values.photo ? values.photo._id ? `${values.photo._id}.${values.photo.name.split(".")[1]}` : values.photo : null
-      {
-        values.photo ? set((state)=>({...state , photo : orgPhoto})) : set({})
-      }
-      
-      // set((state)=>({...state , photo : values?.photo}))
+      set((state)=>({...state , photo : values.photo}))
       form.setFieldsValue(values)
       set((state)=>({...state , selected : id , isModalOpen : true}))
     },
@@ -120,11 +105,6 @@ function getData<T>(url : string){
       //   ...data , photo : userPhoto
       // }
       set((state)=>({...state , photo : userPhoto}))
-    },
-    handlePortfoliosPhoto : async (file) => {
-      const {data : photo} = await request.post("upload" , file)
-      const userPhoto = `${photo._id}.${photo.name.split(".")[1]}`      
-      set({portPhoto : photo._id , photo : userPhoto , portPhotoType : photo.name.split(".")[1] })
     },
   }))
 }

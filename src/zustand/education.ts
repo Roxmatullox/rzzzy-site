@@ -1,3 +1,4 @@
+import userInteface from "../types/auth";
 import getData from "./data";
 
 interface education {
@@ -7,7 +8,7 @@ interface education {
   description: string;
   startDate: string;
   endDate: string;
-  user: null;
+  user: null | userInteface;
   __v: number;
 }
 

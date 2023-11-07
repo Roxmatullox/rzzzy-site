@@ -35,7 +35,7 @@ const AdminsLayout = () => {
   return (
     <Layout className='admin-layout'>
       <Sider className='admin-aside' trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        <div className="demo-logo-vertical" >{collapsed ? <h1>#R</h1> : <h1>#Rzzzy</h1>}</div>
         <Menu
           theme="dark"
           mode="inline"
@@ -55,6 +55,21 @@ const AdminsLayout = () => {
               key: '/admin-education',
               icon: <UploadOutlined />,
               label: <NavLink to="/admin-education">Educations</NavLink>,
+            },
+            {
+              key: '/admin-users',
+              icon: <UserOutlined />,
+              label: <NavLink to="/admin-users">Users</NavLink>,
+            },
+            {
+              key: '/admin-portfolios',
+              icon: <VideoCameraOutlined />,
+              label: <NavLink to="/admin-portfolios">Portfolios</NavLink>,
+            },
+            {
+              key: '/admin-experiences',
+              icon: <UploadOutlined />,
+              label: <NavLink to="/admin-experiences">Experiences</NavLink>,
             },
           ]}
         />

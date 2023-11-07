@@ -2,6 +2,16 @@
   height: 100vh;
   padding-top: 20px;
   z-index: 999;
+
+}
+
+.demo-logo-vertical{
+  padding: 0 20px;
+}
+
+.demo-logo-vertical h1{
+  color: white;
+  font-size: 30px;
 }
 
 .admin-main{

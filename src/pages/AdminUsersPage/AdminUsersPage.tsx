@@ -1,14 +1,12 @@
-import {Fragment , useEffect} from 'react'
-import useEducation from '../../zustand/education'
-import {Form , Button, Flex, Input, Modal, Space, Table } from 'antd'
-import { useForm } from 'antd/es/form/Form'
+import { Fragment , useEffect } from "react"
+import { Button, Flex, Form, Image, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
+import { useForm } from "antd/es/form/Form"
+import useUsers from "../../zustand/users"
 
-import "./EducationPageAdmin.scss"
-
-const EducationPageAdmin = () => {
+const AdminUsersPage = () => {
   
-  const { total , loading , isModalOpen , active , totalPaginate , skills , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useEducation()
- 
+  const {total , photo , selected , loading , isModalOpen , active , totalPaginate , data , handlePhoto , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = useUsers()
+
   const [form] = useForm()
 
   useEffect(()=>{
@@ -17,14 +15,35 @@ const EducationPageAdmin = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Photo',
+      dataIndex: 'photo',
+      key: 'photo',
+      render : (data : string) => {
+        return (<Space size="middle" >
+            
+          <Image style={{
+            width:"50px",
+            height:"50px",
+            // objectFit:"cover",
+            borderRadius:"50%"
+          }}  src={`https://ap-portfolio-backend.up.railway.app/upload/${data}`}/>
+        </Space>)
+      }
     },
     {
-      title: 'Level',
-      dataIndex: 'level',
-      key: 'level',
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Firstname',
+      dataIndex: 'firstName',
+      key: 'firstName',
+    },
+    {
+      title: 'Lastname',
+      dataIndex: 'lastName',
+      key: 'lastName',
     },
     {
       title: 'Action',
@@ -41,21 +60,29 @@ const EducationPageAdmin = () => {
     },
   ];
 
+  const getImgFile = (file :UploadFile)=>{
+    const formData = new FormData()
+    if (file.originFileObj) {
+      formData.append("file"  , file.originFileObj)
+      return formData
+    }
+  }
+
   return (
     <Fragment>
       <section id="search">
         <div className="container">
           <div className="search-container">
             <input onChange={(e)=>SerachSkills(e)} type="text" placeholder="Search..." />
-            <button className="modal-open" onClick={()=>showModal(form)}>Create education</button>
+            <button className="modal-open" onClick={()=>showModal(form)}>Create user</button>
           </div>
         </div>
       </section>            
       <Table loading={loading} className="table"  title={()=>(
         <Flex justify="space-between" align="center">
-          <h2>Educations ({total})</h2>
+          <h2>Users ({total})</h2>
         </Flex>
-      )} pagination={false} dataSource={skills} columns={columns} />
+      )} pagination={false} dataSource={data} columns={columns} />
       {
             totalPaginate > 1 ? <section id="pagination">
             <div className="container">
@@ -77,7 +104,7 @@ const EducationPageAdmin = () => {
               </>
             )}
           >
-                <Form
+                 <Form
                     name="basic"
                     labelCol={{
                       span: 24,
@@ -95,13 +122,34 @@ const EducationPageAdmin = () => {
                     autoComplete="off"
                     form={form}
                   >
+                    <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                    onChange={(e)=>handlePhoto(getImgFile(e?.file))}
+                  >
+                    {photo ? (
+                      <img
+                        src={`https://ap-portfolio-backend.up.railway.app/upload/${photo}`}
+                        alt="avatar"
+                        style={{
+                          width: '100%',
+                        }}
+                      />
+                    ) : (
+                      <p>Upload</p>
+                    )}
+                  </Upload>
+
                     <Form.Item
-                      label="Name"
-                      name="name"
+                      label="Firstname"
+                      name="firstName"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input skill name!',
+                          message: 'Please input workname name!',
                         },
                       ]}
                     >
@@ -109,12 +157,12 @@ const EducationPageAdmin = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Level"
-                      name="level"
+                      label="Lastname"
+                      name="lastName"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input category description!',
+                          message: 'Please input companyName description!',
                         },
                       ]}
                     >
@@ -122,12 +170,12 @@ const EducationPageAdmin = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Description"
-                      name="description"
+                      label="Info"
+                      name="info"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input category description!',
+                          message: 'Please input description description!',
                         },
                       ]}
                     >
@@ -135,30 +183,32 @@ const EducationPageAdmin = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Start date"
-                      name="startDate"
+                      label="Username"
+                      name="username"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input category description!',
+                          message: 'Please input startDate description!',
                         },
                       ]}
                     >
-                      <input className='form-date' type="date" name='startDate' />
+                      <Input/>
                     </Form.Item>
 
-                    <Form.Item
-                      label="End date"
-                      name="endDate"
+                    {
+                      selected !== null ? <></> : <Form.Item
+                      label="Password"
+                      name="password"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input category description!',
+                          message: 'Please input endDate description!',
                         },
                       ]}
                     >
-                      <input className='form-date' type="date" name='endDate' />
+                      <Input/>
                     </Form.Item>
+                    }
 
                     <Form.Item
                       wrapperCol={{
@@ -178,4 +228,4 @@ const EducationPageAdmin = () => {
   )
 }
 
-export default EducationPageAdmin
+export default AdminUsersPage

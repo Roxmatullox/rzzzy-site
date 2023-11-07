@@ -2,32 +2,11 @@ import { create } from 'zustand'
 import type {} from '@redux-devtools/extension' // required for devtools typing
 import { FormInstance, message } from 'antd';
 import request from '../server';
+import userInteface from '../types/auth';
 
-interface userDatas {
-   role: string;
-    fields: string[];
-    client: boolean;
-    _id: string;
-    firstName: string;
-    lastName: string;
-    username: string;
-    createdAt: string;
-    __v: number;
-    address: string;
-    birthday: string;
-    email: string;
-    facebook: string ;
-    github: string ; 
-    info: string; 
-    instagram: string ;
-    phoneNumber: string;
-    telegram: string ; 
-    youtube: string  ;
-    photo: string ;
-}
 
 interface AccountInterface {
-  userDatas : null | userDatas,
+  userDatas : null | userInteface,
   photo : null | string
   getUserDatas : (form : FormInstance)=> void,
   handlePhoto : (file : FormData | undefined)=>void,

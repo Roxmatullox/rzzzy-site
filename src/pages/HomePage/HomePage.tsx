@@ -1,7 +1,7 @@
-import { useEffect , useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useLocation } from "react-router-dom"
 
-import { message , Spin , Form , Button , Input } from "antd";
+import { message , Form , Button , Input } from "antd";
 
 import "./HomePage.scss"
 import useAuth from "../../zustand/auth";
@@ -15,11 +15,10 @@ const HomePage = () => {
 
   const {login , register } = useAuth()
 
-  const [loading , setLoading] = useState(true)
 
-  window.addEventListener("load", () => {
-    setLoading(false)
-  });
+  // window.addEventListener("load", () => {
+  //   setLoading(false)
+  // });
 
   useEffect(()=>{
     message.success("Rzzzy saytiga hush kelibsiz !")
@@ -43,7 +42,7 @@ const HomePage = () => {
   }
     
   return (
-    <Spin spinning={loading} size="large">
+    <Fragment>
       <section id="home">
         <div className="home">
         </div>
@@ -162,7 +161,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-    </Spin>
+    </Fragment>
   )
 }
 

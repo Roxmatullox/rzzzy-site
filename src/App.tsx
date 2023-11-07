@@ -6,8 +6,11 @@ import AdminDashboardPage from "./pages/AdminDashboardPage/AdminDashboardPage"
 import ClientDashboardPage from "./pages/ClientDashboardPage/ClientDashboardPage"
 import SkillsPageAdmin from "./pages/SkillsPage/SkillsPageAdmin"
 import AdminsLayout from "./components/header/Admins-header/AdminLayout"
-import EducationPageAdmin from "./pages/EducatinPage/EducationPage"
+import EducationPageAdmin from "./pages/AdminEducationPage/EducationPage"
 import AccountPage from "./pages/AccountPage/AccountPage"
+import AdminExperiences from "./pages/AdminExperiencesPage/AdminExperiences"
+import AdminUsersPage from "./pages/AdminUsersPage/AdminUsersPage"
+import AdminPortfolios from "./pages/AdminPortfoliosPage/AdminPortfolios"
 
 function App() {
 
@@ -23,6 +26,9 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
             <Route path="/admin-skills" element={<SkillsPageAdmin/>} />
             <Route path="/admin-education" element={<EducationPageAdmin/>} />
+            <Route path="/admin-users" element={<AdminUsersPage/>} />
+            <Route path="/admin-experiences" element={<AdminExperiences/>} />
+            <Route path="/admin-portfolios" element={<AdminPortfolios/>} />
             <Route path="/my-account" element={<AccountPage />} />
           </Route>
           : <></>

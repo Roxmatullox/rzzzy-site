@@ -1,13 +1,15 @@
 // import { create } from "zustand";
 // import request from "../server";
 // import { FormInstance, message } from "antd";
+import userInteface from "../types/auth";
 import getData from "./data";
+
 
 interface Skill {
     _id: string;
     name: string;
     percent: number;
-    user: null;
+    user: null | userInteface;
     __v: number;
 }
 
