@@ -7,13 +7,15 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Flex } from 'antd';
+import { Layout, Menu, Button, theme, Flex, Modal, Spin } from 'antd';
 
 import "./AdminLayout.css"
 import { NavLink } from 'react-router-dom';
 import useAccount from '../../../zustand/account';
 import { useForm } from 'antd/es/form/Form';
 import useAuth from '../../../zustand/auth';
+import useMessage from '../../../zustand/message';
+import useNoClientUsers from '../../../zustand/noClients';
 
 const { Header, Sider, Content } = Layout;
 
@@ -25,8 +27,17 @@ const AdminsLayout = () => {
 
   const location = useLocation()
 
+  const {getMessages , total} = useMessage()
+
+  const {getData , loading , data , total : noClientsTotal , active , setActive , isModalOpen , showModal , handleCancel , totalPaginate } = useNoClientUsers()
+
+  const {photo , updateRole , refetch , getUserDatas} = useAccount()
+
+  useEffect(()=>{
+    getMessages()
+    getData()
+  } , [getMessages , getData , refetch])
   
-  const {photo , getUserDatas} = useAccount()
 
   const {logout} = useAuth()
 
@@ -107,18 +118,28 @@ const AdminsLayout = () => {
                 height: 64,
               }}
             />
-            <NavLink to="my-account">            
-              <img
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src="https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
-              }}
-               style={{
-              width:"50px",
-              height:"50px",
-              objectFit:"cover",
-              borderRadius:"50%"
-            }}  src={`https://ap-portfolio-backend.up.railway.app/upload/${photo}`} alt="UserLogo" /></NavLink>
+            <div>
+            <a style={{
+                marginRight:"20px",
+                color:"white"
+              }} onClick={()=>showModal(form)} >Users ({noClientsTotal})</a>
+              <NavLink style={{
+                marginRight:"20px",
+                color:"white"
+              }} to="messages">Messages ({total})</NavLink>
+              <NavLink to="my-account">            
+                <img
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src="https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
+                }}
+                style={{
+                width:"50px",
+                height:"50px",
+                objectFit:"cover",
+                borderRadius:"50%"
+              }}  src={`https://ap-portfolio-backend.up.railway.app/upload/${photo}`} alt="UserLogo" /></NavLink>
+            </div>
           </Flex>
         </Header>
         <Content
@@ -132,6 +153,48 @@ const AdminsLayout = () => {
           <Outlet />
         </Content>
       </Layout>
+        <Modal
+            open={isModalOpen}
+            title={`Not clients (${noClientsTotal})`}
+            onCancel={handleCancel}
+            footer={(_, { CancelBtn }) => (
+              <>
+                <CancelBtn />
+              </>
+            )}
+          >
+            <Spin spinning={loading}>
+            {
+              data.map((el)=>{
+                return <div style={{
+                  padding:'7px',
+                  marginBottom:"5px",
+                  border:"1px solid black",
+                  borderRadius:"5px",
+                  display:"flex",
+                  justifyContent:"space-between",
+                  alignItems:"center"
+                }}>
+                  <p>{el.username}</p>
+                  <Button onClick={()=>updateRole(el._id)} type='primary'>Client</Button>
+                </div>
+              })
+            }
+            </Spin>
+            {
+            totalPaginate > 1 ? <section id="pagination">
+            <div className="container">
+              <div className="pagination-btns">
+                <button disabled={active === 1 ? true : false} onClick={()=>{setActive(active-1)}}>{"<"}</button>
+                <span style={{
+                  color:"black"
+                }}>{active}</span>
+                <button disabled={totalPaginate === active ? true : false} onClick={()=>{setActive(active+1)}}>{">"}</button>
+              </div>
+            </div>
+          </section> : null
+          }
+          </Modal>
     </Layout>
   );
 };

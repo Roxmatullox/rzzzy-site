@@ -44,12 +44,12 @@ function getData<T>(url : string){
       const params = {
         search : search ,
         page : active ,
-        limit : 12,
+        limit : 6,
       }
       try {
         set((state)=>({...state , loading : true}))
         const {data} = await request.get(url ,{params})
-        set((state)=>({...state , data :data.data , total : data.pagination.total , totalPaginate : Math.ceil(data.pagination.total / 12) }))
+        set((state)=>({...state , data :data.data , total : data.pagination.total , totalPaginate : Math.ceil(data.pagination.total / 6) }))
       } catch (err) {
         message.error("Server bilan hatolik !")
       } finally {

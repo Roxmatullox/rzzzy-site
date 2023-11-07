@@ -1,57 +1,30 @@
-import { Fragment , useEffect } from "react"
-import { Button, Flex, Form, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
-import { useForm } from "antd/es/form/Form"
-import usePortfolios from "../../zustand/portfolios"
-import photo from "../../types/photo"
+import { useForm } from 'antd/es/form/Form'
+import { Fragment , useEffect } from 'react'
+import { Button, Flex, Modal, Space, Table , Form, Input } from 'antd'
+import useClientExperiences from '../../zustand/client/clientExperiences'
+import useExperiences from '../../zustand/experiences'
+const ClientExperiencesPage = () => {
 
+  const { total , loading , active , totalPaginate , data , getData   , SerachSkills , setActive } = useClientExperiences()
+  const { isModalOpen  ,total : fakeTotal ,  editData , deleteData ,   showModal , handleCancel , handleOk} = useExperiences()
 
-const AdminPortfolios = () => {
-
-  const {total , photo  , loading  , isModalOpen , active , totalPaginate , data , handlePortfoliosPhoto , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = usePortfolios()
 
   const [form] = useForm()
 
   useEffect(()=>{
     getData()
-  } , [getData])
-
-
+  } , [getData , isModalOpen , active , fakeTotal])
 
   const columns = [
     {
-      title: 'Photo',
-      dataIndex: 'photo',
-      key: 'photo',
-      render : (data : photo) => {
-        return (<Space size="middle" >
-            
-          <img onError={({ currentTarget }) => {
-              currentTarget.onerror = null; // prevents looping
-              currentTarget.src="https://us.123rf.com/450wm/djvstock/djvstock1707/djvstock170707184/82003554-picture-landscape-symbol-icon-vector-illustration-graphic-design.jpg?ver=6";
-            }}
-           style={{
-            width:"50px",
-            height:"50px",
-            // objectFit:"cover",
-            borderRadius:"50%"
-          }}  src={`https://ap-portfolio-backend.up.railway.app/upload/${data._id}.${data.name.split(".")[1]}`}/>
-        </Space>)
-      }
+      title: 'Work name',
+      dataIndex: 'workName',
+      key: 'workName',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Url',
-      dataIndex: 'url',
-      key: 'url',
-      render : (data : string) => {
-        return (<Space size="middle" >
-          <a href={data}>{data}</a>
-        </Space>)
-      }
+      title: 'Company name',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
       title: 'Action',
@@ -68,28 +41,19 @@ const AdminPortfolios = () => {
     },
   ];
 
-  const getImgFile = (file :UploadFile)=>{
-    const formData = new FormData()
-    if (file.originFileObj) {
-      formData.append("file"  , file.originFileObj)
-      return formData
-    }
-  }
-    
-  
   return (
     <Fragment>
       <section id="search">
         <div className="container">
           <div className="search-container">
             <input onChange={(e)=>SerachSkills(e)} type="text" placeholder="Search..." />
-            <button className="modal-open" onClick={()=>showModal(form)}>Create portfolio</button>
+            <button className="modal-open" onClick={()=>showModal(form)}>Create experience</button>
           </div>
         </div>
       </section>            
       <Table loading={loading} className="table"  title={()=>(
         <Flex justify="space-between" align="center">
-          <h2>Portfolios ({total})</h2>
+          <h2>Experience ({total})</h2>
         </Flex>
       )} pagination={false} dataSource={data} columns={columns} />
       {
@@ -113,7 +77,7 @@ const AdminPortfolios = () => {
               </>
             )}
           >
-                 <Form
+                <Form
                     name="basic"
                     labelCol={{
                       span: 24,
@@ -131,34 +95,13 @@ const AdminPortfolios = () => {
                     autoComplete="off"
                     form={form}
                   >
-                    <Upload
-                    name="avatar"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    onChange={(e)=>handlePortfoliosPhoto(getImgFile(e?.file))}
-                  >
-                    {photo ? (
-                      <img
-                        src={`https://ap-portfolio-backend.up.railway.app/upload/${photo}`}
-                        alt="avatar"
-                        style={{
-                          width: '100%',
-                        }}
-                      />
-                    ) : (
-                      <p>Upload</p>
-                    )}
-                  </Upload>
-
                     <Form.Item
-                      label="Name"
-                      name="name"
+                      label="Work name"
+                      name="workName"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input workname name!',
+                          message: 'Please input skill name!',
                         },
                       ]}
                     >
@@ -166,12 +109,12 @@ const AdminPortfolios = () => {
                     </Form.Item>
 
                     <Form.Item
-                      label="Url"
-                      name="url"
+                      label="Compnay name"
+                      name="companyName"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input companyName description!',
+                          message: 'Please input category description!',
                         },
                       ]}
                     >
@@ -184,11 +127,37 @@ const AdminPortfolios = () => {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input description description!',
+                          message: 'Please input category description!',
                         },
                       ]}
                     >
                       <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="Start date"
+                      name="startDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='startDate' />
+                    </Form.Item>
+
+                    <Form.Item
+                      label="End date"
+                      name="endDate"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input category description!',
+                        },
+                      ]}
+                    >
+                      <input className='form-date' type="date" name='endDate' />
                     </Form.Item>
 
                     <Form.Item
@@ -209,4 +178,4 @@ const AdminPortfolios = () => {
   )
 }
 
-export default AdminPortfolios
+export default ClientExperiencesPage

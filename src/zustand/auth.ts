@@ -22,6 +22,7 @@ const useAuth = create<AuthInterface>()((set , get) => ({
       set((state)=>({...state , isLogin : true , role : data.user.role}))      
       Cookies.set("isLogin" , data.token)
       Cookies.set("userData" , data.user.role)
+      Cookies.set("MyId" , data.user._id)
       if (get().role === "admin") {
         window.location.replace("/admin-dashboard")
       } else{
@@ -37,6 +38,7 @@ const useAuth = create<AuthInterface>()((set , get) => ({
       const values = await form.validateFields()
       if (values.confirmPassword === values.password) {
         const {data} = await request.post("auth/register" , values)
+        
         set((state)=>({...state , isLogin : true , role : data.user.role}))      
         Cookies.set("isLogin" , data.token)
         Cookies.set("userData" , data.user.role)
@@ -57,6 +59,7 @@ const useAuth = create<AuthInterface>()((set , get) => ({
       if (logoutConfirm) {
         Cookies.remove("isLogin")
         Cookies.remove("userData")
+        Cookies.remove("MyId")
         window.location.replace("/")
       } else{
         window.location.replace("/")

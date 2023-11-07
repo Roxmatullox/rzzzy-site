@@ -1,21 +1,20 @@
-import { Fragment , useEffect } from "react"
-import { Button, Flex, Form, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
-import { useForm } from "antd/es/form/Form"
-import usePortfolios from "../../zustand/portfolios"
-import photo from "../../types/photo"
+import { useForm } from 'antd/es/form/Form'
+import { Fragment , useEffect } from 'react'
+import usePortfolios from '../../zustand/portfolios'
+import useClientPortfolios from '../../zustand/client/clientPortfolios'
+import { Button, Flex, Modal, Space, Table, UploadFile , Form, Input, Upload } from 'antd'
+import photo from '../../types/photo'
 
-
-const AdminPortfolios = () => {
-
-  const {total , photo  , loading  , isModalOpen , active , totalPaginate , data , handlePortfoliosPhoto , getData , editData , deleteData , SerachSkills , setActive , showModal , handleCancel , handleOk} = usePortfolios()
+const ClientPortfoliosPage = () => {
+  
+  const { total , loading , active , totalPaginate , data , getData   , SerachSkills , setActive } = useClientPortfolios()
+  const { photo  , total : fakeTotal , isModalOpen  , handlePortfoliosPhoto  , editData , deleteData  , showModal , handleCancel , handleOk} = usePortfolios()
 
   const [form] = useForm()
 
   useEffect(()=>{
-    getData()
-  } , [getData])
-
-
+    getData()    
+  } , [getData , isModalOpen , active , fakeTotal])
 
   const columns = [
     {
@@ -75,8 +74,7 @@ const AdminPortfolios = () => {
       return formData
     }
   }
-    
-  
+
   return (
     <Fragment>
       <section id="search">
@@ -209,4 +207,4 @@ const AdminPortfolios = () => {
   )
 }
 
-export default AdminPortfolios
+export default ClientPortfoliosPage
