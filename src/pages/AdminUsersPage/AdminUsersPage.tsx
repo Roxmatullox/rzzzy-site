@@ -1,5 +1,5 @@
 import { Fragment , useEffect } from "react"
-import { Button, Flex, Form, Image, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
+import { Button, Flex, Form, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
 import { useForm } from "antd/es/form/Form"
 import useUsers from "../../zustand/users"
 
@@ -21,7 +21,10 @@ const AdminUsersPage = () => {
       render : (data : string) => {
         return (<Space size="middle" >
             
-          <Image style={{
+          <img onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src="https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
+            }} style={{
             width:"50px",
             height:"50px",
             // objectFit:"cover",

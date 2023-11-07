@@ -1,5 +1,5 @@
 import { Fragment , useEffect } from "react"
-import { Button, Flex, Form, Image, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
+import { Button, Flex, Form, Input, Modal, Space, Table, Upload, UploadFile } from "antd"
 import { useForm } from "antd/es/form/Form"
 import usePortfolios from "../../zustand/portfolios"
 import photo from "../../types/photo"
@@ -25,7 +25,11 @@ const AdminPortfolios = () => {
       render : (data : photo) => {
         return (<Space size="middle" >
             
-          <Image style={{
+          <img onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src="https://us.123rf.com/450wm/djvstock/djvstock1707/djvstock170707184/82003554-picture-landscape-symbol-icon-vector-illustration-graphic-design.jpg?ver=6";
+            }}
+           style={{
             width:"50px",
             height:"50px",
             // objectFit:"cover",
@@ -71,9 +75,7 @@ const AdminPortfolios = () => {
       return formData
     }
   }
-  
-  console.log(photo);
-  
+    
   
   return (
     <Fragment>

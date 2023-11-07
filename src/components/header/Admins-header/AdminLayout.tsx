@@ -90,7 +90,12 @@ const AdminsLayout = () => {
               }}
             />
             <NavLink to="my-account">            
-              <img style={{
+              <img
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src="https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
+              }}
+               style={{
               width:"50px",
               height:"50px",
               objectFit:"cover",
